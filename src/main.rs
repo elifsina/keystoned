@@ -1,5 +1,3 @@
-pub mod keystoned {
-    tonic::include_proto!("voting");
-}
+mod services;
 
 fn main() {}

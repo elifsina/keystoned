@@ -4,6 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+anyhow = "1.0.91"
+clap = "4.5.20"
 prost = "0.13.3"
 tokio = { version = "1.41.0", features = ["macros", "rt-multi-thread"] }
 tonic = "0.12.3"
