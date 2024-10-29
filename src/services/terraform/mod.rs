@@ -1,27 +1,35 @@
-use std::{path::Path, process::Command};
+use anyhow::anyhow;
+use anyhow::Result;
+use std::{
+    path::{Path, PathBuf},
+    process::Command,
+};
+
+use super::ClusterError;
+use super::ClusterInitializer;
 
 pub struct TerraformInitializer {
-    module_dir: Path,
+    module_dir: PathBuf,
 }
 
 impl TerraformInitializer {
-    pub fn new(module_dir: Path) -> anyhow::Result<Self> {
+    pub fn new(module_dir: &Path) -> Result<Self> {
         if !module_dir.is_dir() {
             return Err(anyhow!("path is not a directory"));
         }
-        Ok(Self { module_dir })
+        Ok(Self {
+            module_dir: module_dir.to_path_buf(),
+        })
     }
 }
 
 impl ClusterInitializer for TerraformInitializer {
-    fn init(&self) -> anyhow::Result<()> {
-        let mut cmd = Command::new("terraform")
+    fn init(&self) -> Result<(), ClusterError> {
+        Command::new("terraform")
             .arg("init")
-            .current_dir(self.module_dir);
-        Ok(cmd
-            .status()?
-            .success()
-            .then_some(())
-            .ok_or_else(|| anyhow!("failed to initialize terraform"))?)
+            .current_dir(&self.module_dir)
+            .status()
+            .map(|_| ())
+            .map_err(|err| ClusterError::Init(anyhow!(err)))
     }
 }
