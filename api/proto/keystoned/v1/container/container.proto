@@ -1,0 +1,19 @@
+syntax = "proto3";
+package container;
+
+import "google/protobuf/any.proto";
+import "container/tag.proto";
+import "bridge/bridge.proto";
+
+message Container {
+    string id = 1;
+    string name = 2;
+    int32 replicas = 3;
+    Tag  tag = 4;
+    google.protobuf.Any source = 5;
+    repeated bridge.Bridge bridges = 6;
+}
+
+message ContainerList {
+    repeated Container containers = 1;
+}

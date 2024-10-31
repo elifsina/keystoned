@@ -1,3 +1,0 @@
-mod services;
-
-fn main() {}

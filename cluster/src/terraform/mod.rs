@@ -5,7 +5,6 @@ use std::{
     process::Command,
 };
 
-use super::ClusterError;
 use super::ClusterInitializer;
 
 pub struct TerraformInitializer {
@@ -24,12 +23,17 @@ impl TerraformInitializer {
 }
 
 impl ClusterInitializer for TerraformInitializer {
-    fn init(&self) -> Result<(), ClusterError> {
+    fn init(&self) -> Result<()> {
         Command::new("terraform")
             .arg("init")
             .current_dir(&self.module_dir)
-            .status()
-            .map(|_| ())
-            .map_err(|err| ClusterError::Init(anyhow!(err)))
+            .status()?;
+
+        Command::new("terraform")
+            .args(["apply", "-auto-approve"])
+            .current_dir(&self.module_dir)
+            .status()?;
+
+        Ok(())
     }
 }

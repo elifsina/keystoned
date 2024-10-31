@@ -1,0 +1,6 @@
+syntax = "proto3";
+package container;
+
+enum Tag {
+    Python = 0;
+}

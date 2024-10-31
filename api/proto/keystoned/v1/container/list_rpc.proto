@@ -1,0 +1,9 @@
+syntax = "proto3";
+package container;
+
+import "container/tag.proto";
+
+message ListRequest {
+    optional string name = 1;
+    optional Tag tag = 2;
+}

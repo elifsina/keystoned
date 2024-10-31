@@ -1,0 +1,11 @@
+syntax = "proto3";
+package container;
+
+import "container/add_rpc.proto";
+import "container/list_rpc.proto";
+import "container/container.proto"; 
+
+service ContainerService {
+    rpc Add (AddRequest) returns (AddResponse);
+    rpc List (ListRequest) returns (ContainerList);
+}

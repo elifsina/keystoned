@@ -1,0 +1,12 @@
+syntax = "proto3";
+package bridge;
+
+import "bridge/bridge.proto";
+
+message RemoveRequest {
+    string id = 1;
+}
+
+message RemoveResponse {
+    Bridge bridge = 1;
+}

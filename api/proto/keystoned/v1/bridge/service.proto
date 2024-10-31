@@ -1,0 +1,10 @@
+syntax = "proto3";
+package bridge;
+
+import "bridge/create_rpc.proto";
+import "bridge/remove_rpc.proto";
+
+service BridgeService {
+    rpc Create (CreateRequest) returns (CreateResponse);
+    rpc Remove(RemoveRequest) returns (RemoveResponse);
+}
